@@ -40,7 +40,7 @@ public class Application {
         contactList.add("Jane Doe | 2342342345");
         contactList.add("Sam Space | 3453453456");
 
-        Files.write(contactsPath, contactList);
+//        Files.write(contactsPath, contactList);
 
         int userOption;
         List<String> printListFromFile = Files.readAllLines(contactsPath);
@@ -76,11 +76,24 @@ public class Application {
                 System.out.println("Enter a name to search");
                 String userSearch = sc.nextLine();
 
-                for (int i = 0; i < printListFromFile.size(); i++){
-                    if (printListFromFile.get(i).contains(userSearch)){
-                        System.out.println(printListFromFile.get(i));
-                    }
-                }
+//                Path ContactsPath = Paths.get("contacts.txt");
+//                List<String> Personlist;
+//                try {
+//                    Personlist = Files.readAllLines(ContactsPath);
+//                    for (String person : Personlist) {
+//                        if (person.toLowerCase().contains(searchedLastName.toLowerCase())) {
+//                            System.out.println(“Contact:\n” + person);
+//                        }
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                for (int i = 0; i < printListFromFile.size(); i++){
+//                    if (printListFromFile.get(i).contains(userSearch)){
+//                        System.out.println(printListFromFile.get(i));
+//                    }
+//                }
 
 
 //                for(String line : printListFromFile){
@@ -100,16 +113,33 @@ public class Application {
 //                    }
 //                } catch (IOException e) {
 //                    e.printStackTrace();
-                try (Stream<String> stream = Files.lines(Paths.get("src/data/Contacts.txt"))) {
-
-                    stream.filter(line -> line.contains(" " + userSearch + " ")).forEach(System.out::println);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+//                try (Stream<String> stream = Files.lines(Paths.get("src/data/Contacts.txt"))) {
+//
+//                    stream.filter(line -> line.contains(" " + userSearch + " ")).forEach(System.out::println);
+//
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
 
             } else if (userOption == 4) {
                 System.out.println("option 4: Delete an existing contact");
+                printListFromFile = Files.readAllLines(contactsPath);
+
+                List<String> newList = new ArrayList<>();
+                System.out.println("Enter Contact you wish to delete");
+                String userDelete = sc.nextLine();
+                for(String line : printListFromFile){
+
+                    if(line.contains(userDelete)){
+                        newList.add("");
+                        continue;
+                    }
+
+                    newList.add(line);
+                }
+
+                contactList = newList;
+
 
             } else if (userOption == 5) {
                 System.out.println("option 5: Exiting the application");
