@@ -28,9 +28,9 @@ public class Application {
 
         contactList.add("Name | Phone number");
         contactList.add("---------------");
-        contactList.add("Jack Blank | 1231231234");
-        contactList.add("Jane Doe | 2342342345");
-        contactList.add("Sam Space | 3453453456");
+        contactList.add("Jack Blank | (123)123-1234");
+        contactList.add("Jane Doe | (234)234-2345");
+        contactList.add("Sam Space | (345)345-3456");
 
         if (Files.notExists(dataDirectory)) {
             Files.createDirectories(dataDirectory);
@@ -116,6 +116,7 @@ public class Application {
             }
 
         } while (userOption != 5);
+
 
 
     }
