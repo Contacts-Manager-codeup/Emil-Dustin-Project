@@ -65,10 +65,26 @@ public class Application {
                 System.out.println();
             } else if (userOption == 2) {
                 System.out.println("option 2: Add a new contact");
-                System.out.println("Enter a new contact: Name | Number");
+                System.out.println("Enter a new contact: Name | Number (xxx)xxx-xxxx");
                 String newContact = sc.nextLine();
-                Files.write(contactsPath, Arrays.asList(newContact), StandardOpenOption.APPEND);
+
                 System.out.println();
+
+                for (int i = 0; i < printListFromFile.size(); i++) {
+                    if (printListFromFile.get(i).toLowerCase().contains(newContact)) {
+                        System.out.println("There's already a contact named" + newContact + "Do you want to overwrite it? (Yes/No)");
+                        String userYesNo = sc.nextLine();
+                        if (userYesNo.equalsIgnoreCase("Yes")){
+//                            Files.write(contactsPath, Arrays.asList(newContact), StandardOpenOption.APPEND);
+//                            printListFromFile.get(i).replace(newContact);
+                        }
+                    }
+
+
+                }
+//                Files.write(contactsPath, Arrays.asList(newContact), StandardOpenOption.APPEND);
+//                System.out.println();
+
 
             } else if (userOption == 3) {
                 System.out.println("option 3: Search a contact by name");
