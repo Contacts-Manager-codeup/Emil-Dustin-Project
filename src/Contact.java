@@ -1,19 +1,30 @@
-import javax.sound.sampled.Line;
+import java.nio.file.StandardOpenOption;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
-public class Application {
+public class Contact {
 
+    public String name;
+    public String number;
+
+
+    public Contact(String contactName, String contactNumber){
+        this.name = contactName;
+        this.number = contactNumber;
+    }
 
     public static void main(String[] args) throws IOException {
+        Contact contact1 = new Contact("Jack Blank", "(123)123-1234");
+        Contact contact2 = new Contact("Jane Doe", "(234)234-2345");
+        Contact contact3 = new Contact("Sam Space", "(345)345-3456");
+
+
         Scanner sc = new Scanner(System.in);
         String directory = "./src/data";
         String fileName = "Contacts.txt";
@@ -26,11 +37,13 @@ public class Application {
         List<String> contactList = new ArrayList<>();
 
 
+
         contactList.add("Name | Phone number");
         contactList.add("---------------");
-        contactList.add("Jack Blank | (123)123-1234");
-        contactList.add("Jane Doe | (234)234-2345");
-        contactList.add("Sam Space | (345)345-3456");
+        contactList.add(contact1.name+ " | "+ contact1.number);
+        contactList.add(contact2.name+ " | "+ contact2.number);
+        contactList.add(contact3.name+ " | "+ contact3.number);
+
 
         if (Files.notExists(dataDirectory)) {
             Files.createDirectories(dataDirectory);
@@ -65,23 +78,32 @@ public class Application {
                 System.out.println();
             } else if (userOption == 2) {
                 System.out.println("option 2: Add a new contact");
-                System.out.println("Enter a new contact: Name | Number (xxx)xxx-xxxx");
-                String newContact = sc.nextLine();
-
-                System.out.println();
-
-                for (int i = 0; i < printListFromFile.size(); i++) {
-                    if (printListFromFile.get(i).toLowerCase().contains(newContact)) {
-                        System.out.println("There's already a contact named" + newContact + "Do you want to overwrite it? (Yes/No)");
-                        String userYesNo = sc.nextLine();
-                        if (userYesNo.equalsIgnoreCase("Yes")){
-//                            Files.write(contactsPath, Arrays.asList(newContact), StandardOpenOption.APPEND);
-//                            printListFromFile.get(i).replace(newContact);
-                        }
-                    }
-
-
+                System.out.println("Enter a new contact: Name");
+                String newContactName = sc.nextLine();
+                System.out.println("Enter new contact number");
+                String newContactNumber = sc.nextLine();
+                if (newContactNumber.length() == 7){
+                    newContactNumber = newContactNumber.substring(0,3)+ "-" +newContactNumber.substring(3);
+                } else if (newContactNumber.length() == 10) {
+                    newContactNumber = "("+newContactNumber.substring(0,3)+ ")" +newContactNumber.substring(3,6)+"-"+newContactNumber.substring(6);
                 }
+                System.out.println();
+                Contact newContact = new Contact(newContactName,newContactNumber);
+                Files.write(contactsPath, Arrays.asList(newContact.name +" | "+newContact.number), StandardOpenOption.APPEND);
+
+//                for (int i = 0; i < printListFromFile.size(); i++) {
+//                    if (printListFromFile.get(i).toLowerCase().contains(newContactName)) {
+//                        System.out.println("There's already a contact named" + newContactName + "Do you want to overwrite it? (Yes/No)");
+//                        String userYesNo = sc.nextLine();
+//                        if (userYesNo.equalsIgnoreCase("Yes")){
+//                            Contact newContact = new Contact(newContactName,newContactNumber);
+//                            Files.write(contactsPath, Arrays.asList(newContact.name +" | "+newContact.number), StandardOpenOption.APPEND);
+////                            printListFromFile.get(i).replace(newContact);
+//                        }
+//                    }
+
+
+//                }
 //                Files.write(contactsPath, Arrays.asList(newContact), StandardOpenOption.APPEND);
 //                System.out.println();
 
